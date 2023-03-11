@@ -11,5 +11,6 @@ const messages = {
     error.status = status;
     return error;
   };
+  // console.log(httpError)
   
   module.exports = httpError;

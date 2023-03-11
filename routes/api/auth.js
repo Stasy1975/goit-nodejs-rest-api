@@ -3,6 +3,8 @@ const router = express.Router();
 
 const controller = require('../../controllers/auth');
 const ctrlWrapper = require('../../helpers/ctrlWrapper')
+const authentication = require('../../middlewares/authentication')
+const upload = require('../../middlewares/upload')
 
 const  validation  = require('../../middlewares/validate');
 const { registerSchema, loginSchema } = require('../../models/user');
@@ -17,6 +19,10 @@ router.get("/current",  ctrlWrapper(controller.current));
 router.post("/logout",  ctrlWrapper(controller.logout));
 
 router.patch("/",  ctrlWrapper(controller.subscription));
+
+router.post("/avatars", upload.single('avatar'), ctrlWrapper(controller.upload));
+
+router.patch("/avatars", authentication, upload.single('avatar'), ctrlWrapper(controller.updateAvatar));
 
 
 
