@@ -4,7 +4,7 @@ const { SECRET_KEY } = process.env;
 
 const {User} = require("../../models/user");
 
-const { httpError } = require("../../helpers/httpError");
+const httpError = require("../../helpers/httpError");
 
 const login = async (req, res) => {
   
@@ -14,6 +14,10 @@ const login = async (req, res) => {
 
     if (!user) {
       throw httpError(401, "Email or password invalid");
+    }
+
+    if (!user.verify) {
+      throw httpError(401, "Email have not verify");
     }
 
     const checkPassword = await bcrypt.compare(password, user.password);

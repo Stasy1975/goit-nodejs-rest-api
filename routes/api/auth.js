@@ -7,7 +7,7 @@ const authentication = require('../../middlewares/authentication')
 const upload = require('../../middlewares/upload')
 
 const  validation  = require('../../middlewares/validate');
-const { registerSchema, loginSchema } = require('../../models/user');
+const { registerSchema, loginSchema,EmailResendSchema } = require('../../models/user');
 
 
 router.post("/register", validation(registerSchema), ctrlWrapper(controller.register) );
@@ -23,6 +23,11 @@ router.patch("/",  ctrlWrapper(controller.subscription));
 router.post("/avatars", upload.single('avatar'), ctrlWrapper(controller.upload));
 
 router.patch("/avatars", authentication, upload.single('avatar'), ctrlWrapper(controller.updateAvatar));
+
+router.get("/verify/:verificationToken", ctrlWrapper(controller.verify)); 
+
+router.post("/verify", validation(EmailResendSchema), ctrlWrapper(controller.resendTokenEmail));
+
 
 
 

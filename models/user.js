@@ -16,6 +16,14 @@ const userSchema = Schema({
     enum: ["starter", "pro", "business"],
     default: "starter"
   },
+  verify: {
+    type: Boolean,
+    default: false,
+  },
+  verificationToken: {
+    type: String,
+    required: [true, 'Verify token is required'],
+  },
   avatarURL: {
     type: String,
     required: true
@@ -36,8 +44,12 @@ const loginSchema = Joi.object({
     password: Joi.string().required(),
 })
 
+const EmailResendSchema = Joi.object({
+  email: Joi.string().required(),
+})
+
 
 const User = model('user', userSchema);
 
 module.exports = {User,  registerSchema,
-    loginSchema};
+    loginSchema, EmailResendSchema};
